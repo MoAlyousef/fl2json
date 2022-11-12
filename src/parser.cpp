@@ -117,7 +117,7 @@ Widget Parser::consume_widget() {
             }
             if (t.equals("down_box")) {
                 l.next();
-                w.props.box = consume_word(t);
+                w.props.down_box = consume_word(t);
             }
             if (t.equals("align")) {
                 t = l.next();
