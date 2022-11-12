@@ -280,7 +280,7 @@ Widget Parser::consume_widget() {
             if (OpenBrace == 0)
                 break;
             if (t.word)
-                if (t.starts_with("Fl_") || t.equals("MenuItem")) {
+                if (t.starts_with("Fl_") || t.equals("MenuItem") || t.equals("Submenu")) {
                     auto c = consume_widget();
                     c.type = consume_word(t);
                     if (!w.children)
@@ -394,7 +394,7 @@ Function Parser::consume_func() {
             if (OpenBrace == 0)
                 break;
             if (t.word) {
-                if (t.starts_with("Fl_") || t.equals("MenuItem")) {
+                if (t.starts_with("Fl_") || t.equals("MenuItem") || t.equals("Submenu"))  {
                     auto w = consume_widget();
                     w.type = consume_word(t);
                     f.widgets.push_back(w);
