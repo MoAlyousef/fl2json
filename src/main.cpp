@@ -26,7 +26,8 @@ int main(int argc, char **argv) try {
     Parser p(l);
     auto a = p.parse();
     printf("%s\n", a.json_string().c_str());
-    if (s) free(s);
+    if (s)
+        free(s);
 } catch (const std::exception &e) {
     fprintf(stderr, "%s\n", e.what());
 }

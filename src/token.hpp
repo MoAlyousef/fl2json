@@ -4,7 +4,6 @@ struct Token {
     enum TokenType {
         Unknown,
         Word,
-        String,
         OpenBrace,
         CloseBrace,
         Eof,

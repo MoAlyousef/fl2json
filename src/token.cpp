@@ -8,8 +8,6 @@ const char *Token::type_string() {
         return "Unknown";
     case Word:
         return "Word";
-    case String:
-        return "String";
     case OpenBrace:
         return "OpenBrace";
     case CloseBrace:

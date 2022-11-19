@@ -57,7 +57,7 @@ struct Widget {
     std::string type;
     std::string name;
     WidgetProps props;
-    std::optional<std::vector<Widget>> children;
+    std::vector<Widget> children;
 };
 
 enum Visibility {
@@ -117,6 +117,7 @@ struct Ast {
     double version = 0.0;
     std::string header_name;
     std::string code_name;
+    bool i18n_type;
     std::vector<Class> classes;
     std::vector<Function> functions;
     std::vector<Comment> comments;
