@@ -380,15 +380,16 @@ Function Parser::consume_func() {
     if (tokens[i].type == Token::OpenBrace) {
         while (tokens[i].type != Token::CloseBrace) {
             i += 1;
+            if (tokens[i].equals("code")) {
+                i += 1;
+                f.code = consume_code();
+                i += 1;
+            }
             if (tokens[i].starts_with("Fl_") || tokens[i].equals("MenuItem") ||
                 tokens[i].equals("Submenu")) {
                 auto w = consume_widget();
                 f.widgets.push_back(w);
                 i += 1;
-            }
-            if (tokens[i].equals("code")) {
-                i += 1;
-                f.code = consume_code();
             }
         }
     }
@@ -463,7 +464,7 @@ Ast Parser::parse() {
                 i += 2;
             }
             if (curr.equals("header_name")) {
-                i+=1;
+                i += 1;
                 a.header_name = consume_braced_string();
             }
             if (curr.equals("code_name")) {
