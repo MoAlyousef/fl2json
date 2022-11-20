@@ -4,10 +4,6 @@
 #include <cstdlib>
 #include <string>
 
-std::string consume_word(Token &t) {
-    return t.get_word();
-}
-
 std::string Parser::consume_braced_string() {
     i += 1;
     auto t = tokens[i];
@@ -40,253 +36,242 @@ std::string Parser::consume_code() {
 Widget Parser::consume_widget() {
     Widget w;
     w.type = tokens[i].get_word();
-    // auto t = l.next();
-    // if (t.type == Token::OpenBrace) {
-    //     t = l.next();
-    // }
-    // if (t.get_word())
-    //     w.name = consume_word(t);
-    // else
-    //     w.name = "";
-    // while (t.type != Token::Eof) {
-    //     t = l.next();
-    //     if (t.type == Token::CloseBrace)
-    //         break;
-    //     if (t.get_word()) {
-    //         if (t.equals("open"))
-    //             w.props.open = true;
-    //         if (t.equals("hide"))
-    //             w.props.hide = true;
-    //         if (t.equals("deactivate"))
-    //             w.props.deactivate = true;
-    //         if (t.equals("divider"))
-    //             w.props.divider = true;
-    //         if (t.equals("resizable"))
-    //             w.props.resizable = true;
-    //         if (t.equals("visible"))
-    //             w.props.visible = true;
-    //         if (t.equals("hotspot"))
-    //             w.props.hotspot = true;
-    //         if (t.equals("xywh")) {
-    //             l.next();
-    //             w.props.xywh = consume_braced_string(l);
-    //         }
-    //         if (t.equals("color")) {
-    //             t = l.next();
-    //             w.props.color = strtoul(consume_word(t).c_str(), nullptr, 10);
-    //         }
-    //         if (t.equals("selection_color")) {
-    //             t = l.next();
-    //             w.props.selection_color = strtoul(consume_word(t).c_str(), nullptr, 10);
-    //         }
-    //         if (t.equals("labelcolor")) {
-    //             t = l.next();
-    //             w.props.labelcolor = strtoul(consume_word(t).c_str(), nullptr, 10);
-    //         }
-    //         if (t.equals("textcolor")) {
-    //             t = l.next();
-    //             w.props.textcolor = strtoul(consume_word(t).c_str(), nullptr, 10);
-    //         }
-    //         if (t.equals("type")) {
-    //             t = l.next();
-    //             w.props.type = consume_word(t);
-    //         }
-    //         if (t.equals("labeltype")) {
-    //             t = l.next();
-    //             w.props.labeltype = consume_word(t);
-    //         }
-    //         if (t.equals("labelfont")) {
-    //             t = l.next();
-    //             w.props.labelfont = atoi(consume_word(t).c_str());
-    //         }
-    //         if (t.equals("textfont")) {
-    //             t = l.next();
-    //             w.props.textfont = atoi(consume_word(t).c_str());
-    //         }
-    //         if (t.equals("labelsize")) {
-    //             t = l.next();
-    //             w.props.labelsize = atoi(consume_word(t).c_str());
-    //         }
-    //         if (t.equals("textsize")) {
-    //             t = l.next();
-    //             w.props.textsize = atoi(consume_word(t).c_str());
-    //         }
-    //         if (t.equals("box")) {
-    //             l.next();
-    //             w.props.box = consume_word(t);
-    //         }
-    //         if (t.equals("down_box")) {
-    //             l.next();
-    //             w.props.down_box = consume_word(t);
-    //         }
-    //         if (t.equals("align")) {
-    //             t = l.next();
-    //             w.props.align = atoi(consume_word(t).c_str());
-    //         }
-    //         if (t.equals("when")) {
-    //             t = l.next();
-    //             w.props.when = atoi(consume_word(t).c_str());
-    //         }
-    //         if (t.equals("shortcut")) {
-    //             t = l.next();
-    //             w.props.shortcut = atoi(consume_word(t).c_str());
-    //         }
-    //         if (t.equals("gap")) {
-    //             t = l.next();
-    //             w.props.gap = atoi(consume_word(t).c_str());
-    //         }
-    //         if (t.equals("minimum")) {
-    //             t = l.next();
-    //             w.props.minimum = strtod(consume_word(t).c_str(), nullptr);
-    //         }
-    //         if (t.equals("maximum")) {
-    //             t = l.next();
-    //             w.props.maximum = strtod(consume_word(t).c_str(), nullptr);
-    //         }
-    //         if (t.equals("step")) {
-    //             t = l.next();
-    //             w.props.step = strtod(consume_word(t).c_str(), nullptr);
-    //         }
-    //         if (t.equals("slider_size")) {
-    //             t = l.next();
-    //             w.props.slider_size = strtod(consume_word(t).c_str(), nullptr);
-    //         }
-    //         if (t.equals("size")) {
-    //             t = l.next();
-    //             w.props.size = strtod(consume_word(t).c_str(), nullptr);
-    //         }
-    //         if (t.equals("label")) {
-    //             t = l.next();
-    //             if (t.type == Token::OpenBrace) {
-    //                 w.props.label = consume_braced_string(l);
-    //             } else {
-    //                 w.props.label = consume_word(t);
-    //             }
-    //         }
-    //         if (t.equals("class")) {
-    //             t = l.next();
-    //             if (t.type == Token::OpenBrace) {
-    //                 w.props.klass = consume_braced_string(l);
-    //             } else {
-    //                 w.props.klass = consume_word(t);
-    //             }
-    //         }
-    //         if (t.equals("tooltip")) {
-    //             t = l.next();
-    //             if (t.type == Token::OpenBrace) {
-    //                 w.props.tooltip = consume_braced_string(l);
-    //             } else {
-    //                 w.props.tooltip = consume_word(t);
-    //             }
-    //         }
-    //         if (t.equals("image")) {
-    //             t = l.next();
-    //             if (t.type == Token::OpenBrace) {
-    //                 w.props.image = consume_braced_string(l);
-    //             } else {
-    //                 w.props.image = consume_word(t);
-    //             }
-    //         }
-    //         if (t.equals("deimage")) {
-    //             t = l.next();
-    //             if (t.type == Token::OpenBrace) {
-    //                 w.props.deimage = consume_braced_string(l);
-    //             } else {
-    //                 w.props.deimage = consume_word(t);
-    //             }
-    //         }
-    //         if (t.equals("value")) {
-    //             t = l.next();
-    //             if (t.type == Token::OpenBrace) {
-    //                 w.props.value = consume_braced_string(l);
-    //             } else {
-    //                 w.props.value = consume_word(t);
-    //             }
-    //         }
-    //         if (t.equals("set_size_tuples")) {
-    //             l.next();
-    //             std::string s = consume_braced_string(l);
-    //             w.props.size_tuple = s;
-    //         }
-    //         if (t.equals("code0")) {
-    //             l.next();
-    //             std::string s = consume_braced_string(l);
-    //             w.props.code0 = s;
-    //         }
-    //         if (t.equals("code1")) {
-    //             l.next();
-    //             std::string s = consume_braced_string(l);
-    //             w.props.code1 = s;
-    //         }
-    //         if (t.equals("code2")) {
-    //             l.next();
-    //             std::string s = consume_braced_string(l);
-    //             w.props.code2 = s;
-    //         }
-    //         if (t.equals("code3")) {
-    //             l.next();
-    //             std::string s = consume_braced_string(l);
-    //             w.props.code3 = s;
-    //         }
-    //         if (t.equals("extra_code")) {
-    //             l.next();
-    //             std::string s = consume_braced_string(l);
-    //             w.props.extra_code = s;
-    //         }
-    //         if (t.equals("callback")) {
-    //             t = l.next();
-    //             if (t.type == Token::OpenBrace) {
-    //                 w.props.callback = consume_braced_string(l);
-    //             } else {
-    //                 w.props.callback = consume_word(t);
-    //             }
-    //         }
-    //         if (t.equals("user_data")) {
-    //             t = l.next();
-    //             if (t.type == Token::OpenBrace) {
-    //                 w.props.user_data = consume_braced_string(l);
-    //             } else {
-    //                 w.props.user_data = consume_word(t);
-    //             }
-    //         }
-    //         if (t.equals("user_data_type")) {
-    //             t = l.next();
-    //             if (t.type == Token::OpenBrace) {
-    //                 w.props.user_data_type = consume_braced_string(l);
-    //             } else {
-    //                 w.props.user_data_type = consume_word(t);
-    //             }
-    //         }
-    //         if (t.equals("comment")) {
-    //             t = l.next();
-    //             if (t.type == Token::OpenBrace) {
-    //                 w.props.comment = consume_braced_string(l);
-    //             } else {
-    //                 w.props.comment = consume_word(t);
-    //             }
-    //         }
-    //     }
-    // }
-    // t = l.next();
-    // // We have children
-    // if (t.type == Token::OpenBrace) {
-    //     int OpenBrace = 1;
-    //     while (t.type != Token::Eof) {
-    //         t = l.next();
-    //         if (t.type == Token::OpenBrace)
-    //             OpenBrace++;
-    //         if (t.type == Token::CloseBrace)
-    //             OpenBrace--;
-    //         if (OpenBrace == 0)
-    //             break;
-    //         if (t.get_word())
-    //             if (t.starts_with("Fl_") || t.equals("MenuItem") || t.equals("Submenu")) {
-    //                 auto c = consume_widget();
-    //                 c.type = consume_word(t);
-    //                 w.children.push_back(c);
-    //             }
-    //     }
-    // }
+    i += 1;
+    if (tokens[i].type == Token::OpenBrace) {
+        i += 1;
+    }
+    w.name = tokens[i].get_word();
+    while (tokens[i].type != Token::Eof) {
+        i += 1;
+        if (tokens[i].type == Token::CloseBrace)
+            break;
+        if (tokens[i].equals("open"))
+            w.props.open = true;
+        if (tokens[i].equals("hide"))
+            w.props.hide = true;
+        if (tokens[i].equals("deactivate"))
+            w.props.deactivate = true;
+        if (tokens[i].equals("divider"))
+            w.props.divider = true;
+        if (tokens[i].equals("resizable"))
+            w.props.resizable = true;
+        if (tokens[i].equals("visible"))
+            w.props.visible = true;
+        if (tokens[i].equals("hotspot"))
+            w.props.hotspot = true;
+        if (tokens[i].equals("xywh")) {
+            i += 1;
+            w.props.xywh = consume_braced_string();
+        }
+        if (tokens[i].equals("color")) {
+            i += 1;
+            w.props.color = strtoul(tokens[i].get_word().c_str(), nullptr, 10);
+        }
+        if (tokens[i].equals("selection_color")) {
+            i += 1;
+            w.props.selection_color = strtoul(tokens[i].get_word().c_str(), nullptr, 10);
+        }
+        if (tokens[i].equals("labelcolor")) {
+            i += 1;
+            w.props.labelcolor = strtoul(tokens[i].get_word().c_str(), nullptr, 10);
+        }
+        if (tokens[i].equals("textcolor")) {
+            i += 1;
+            w.props.textcolor = strtoul(tokens[i].get_word().c_str(), nullptr, 10);
+        }
+        if (tokens[i].equals("type")) {
+            i += 1;
+            w.props.type = tokens[i].get_word();
+        }
+        if (tokens[i].equals("labeltype")) {
+            i += 1;
+            w.props.labeltype = tokens[i].get_word();
+        }
+        if (tokens[i].equals("labelfont")) {
+            i += 1;
+            w.props.labelfont = atoi(tokens[i].get_word().c_str());
+        }
+        if (tokens[i].equals("textfont")) {
+            i += 1;
+            w.props.textfont = atoi(tokens[i].get_word().c_str());
+        }
+        if (tokens[i].equals("labelsize")) {
+            i += 1;
+            w.props.labelsize = atoi(tokens[i].get_word().c_str());
+        }
+        if (tokens[i].equals("textsize")) {
+            i += 1;
+            w.props.textsize = atoi(tokens[i].get_word().c_str());
+        }
+        if (tokens[i].equals("box")) {
+            i += 1;
+            w.props.box = tokens[i].get_word();
+        }
+        if (tokens[i].equals("down_box")) {
+            i += 1;
+            w.props.down_box = tokens[i].get_word();
+        }
+        if (tokens[i].equals("align")) {
+            i += 1;
+            w.props.align = atoi(tokens[i].get_word().c_str());
+        }
+        if (tokens[i].equals("when")) {
+            i += 1;
+            w.props.when = atoi(tokens[i].get_word().c_str());
+        }
+        if (tokens[i].equals("shortcut")) {
+            i += 1;
+            w.props.shortcut = atoi(tokens[i].get_word().c_str());
+        }
+        if (tokens[i].equals("gap")) {
+            i += 1;
+            w.props.gap = atoi(tokens[i].get_word().c_str());
+        }
+        if (tokens[i].equals("minimum")) {
+            i += 1;
+            w.props.minimum = strtod(tokens[i].get_word().c_str(), nullptr);
+        }
+        if (tokens[i].equals("maximum")) {
+            i += 1;
+            w.props.maximum = strtod(tokens[i].get_word().c_str(), nullptr);
+        }
+        if (tokens[i].equals("step")) {
+            i += 1;
+            w.props.step = strtod(tokens[i].get_word().c_str(), nullptr);
+        }
+        if (tokens[i].equals("slider_size")) {
+            i += 1;
+            w.props.slider_size = strtod(tokens[i].get_word().c_str(), nullptr);
+        }
+        if (tokens[i].equals("size")) {
+            i += 1;
+            w.props.size = strtod(tokens[i].get_word().c_str(), nullptr);
+        }
+        if (tokens[i].equals("label")) {
+            i += 1;
+            if (tokens[i].type == Token::OpenBrace) {
+                w.props.label = consume_braced_string();
+            } else {
+                w.props.label = tokens[i].get_word();
+            }
+        }
+        if (tokens[i].equals("class")) {
+            i += 1;
+            if (tokens[i].type == Token::OpenBrace) {
+                w.props.klass = consume_braced_string();
+            } else {
+                w.props.klass = tokens[i].get_word();
+            }
+        }
+        if (tokens[i].equals("tooltip")) {
+            i += 1;
+            if (tokens[i].type == Token::OpenBrace) {
+                w.props.tooltip = consume_braced_string();
+            } else {
+                w.props.tooltip = tokens[i].get_word();
+            }
+        }
+        if (tokens[i].equals("image")) {
+            i += 1;
+            if (tokens[i].type == Token::OpenBrace) {
+                w.props.image = consume_braced_string();
+            } else {
+                w.props.image = tokens[i].get_word();
+            }
+        }
+        if (tokens[i].equals("deimage")) {
+            i += 1;
+            if (tokens[i].type == Token::OpenBrace) {
+                w.props.deimage = consume_braced_string();
+            } else {
+                w.props.deimage = tokens[i].get_word();
+            }
+        }
+        if (tokens[i].equals("value")) {
+            i += 1;
+            if (tokens[i].type == Token::OpenBrace) {
+                w.props.value = consume_braced_string();
+            } else {
+                w.props.value = tokens[i].get_word();
+            }
+        }
+        if (tokens[i].equals("set_size_tuples")) {
+            i += 1;
+            std::string s = consume_braced_string();
+            w.props.size_tuple = s;
+        }
+        if (tokens[i].equals("code0")) {
+            i += 1;
+            std::string s = consume_braced_string();
+            w.props.code0 = s;
+        }
+        if (tokens[i].equals("code1")) {
+            i += 1;
+            std::string s = consume_braced_string();
+            w.props.code1 = s;
+        }
+        if (tokens[i].equals("code2")) {
+            i += 1;
+            std::string s = consume_braced_string();
+            w.props.code2 = s;
+        }
+        if (tokens[i].equals("code3")) {
+            i += 1;
+            std::string s = consume_braced_string();
+            w.props.code3 = s;
+        }
+        if (tokens[i].equals("extra_code")) {
+            i += 1;
+            std::string s = consume_braced_string();
+            w.props.extra_code = s;
+        }
+        if (tokens[i].equals("callback")) {
+            i += 1;
+            if (tokens[i].type == Token::OpenBrace) {
+                w.props.callback = consume_braced_string();
+            } else {
+                w.props.callback = tokens[i].get_word();
+            }
+        }
+        if (tokens[i].equals("user_data")) {
+            i += 1;
+            if (tokens[i].type == Token::OpenBrace) {
+                w.props.user_data = consume_braced_string();
+            } else {
+                w.props.user_data = tokens[i].get_word();
+            }
+        }
+        if (tokens[i].equals("user_data_type")) {
+            i += 1;
+            if (tokens[i].type == Token::OpenBrace) {
+                w.props.user_data_type = consume_braced_string();
+            } else {
+                w.props.user_data_type = tokens[i].get_word();
+            }
+        }
+        if (tokens[i].equals("comment")) {
+            i += 1;
+            if (tokens[i].type == Token::OpenBrace) {
+                w.props.comment = consume_braced_string();
+            } else {
+                w.props.comment = tokens[i].get_word();
+            }
+        }
+    }
+    if (tokens[i + 1].type == Token::OpenBrace) {
+        i += 1;
+        while (tokens[i].type != Token::CloseBrace) {
+            i += 1;
+            while (tokens[i].starts_with("Fl_")
+                || tokens[i].equals("MenuItem")
+                || tokens[i].equals("Submenu"))
+            {
+                auto c = consume_widget();
+                w.children.push_back(c);
+                i += 1;
+            }
+        }
+    }
     return w;
 }
 
