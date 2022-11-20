@@ -6,6 +6,7 @@
 #include <vector>
 
 class Parser {
+    Lexer lexer;
     std::vector<Token> tokens;
     size_t i = 0;
     Function consume_func();

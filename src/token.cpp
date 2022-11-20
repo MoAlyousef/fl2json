@@ -30,5 +30,10 @@ bool Token::equals(const char *other) {
 }
 
 bool Token::starts_with(const char *other) {
-    return !strncmp(word, other, strlen(other));
+    return get_word().find(other) == 0;
+}
+
+std::string Token::get_word() {
+    if (!word) return "";
+    return std::string(word, end - start);
 }

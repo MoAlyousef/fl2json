@@ -5,13 +5,13 @@
 #include <string>
 
 std::string consume_word(Token &t) {
-    return std::string(t.word, t.end - t.start);
+    return t.get_word();
 }
 
 std::string Parser::consume_braced_string() {
-    auto t = tokens[i];
     i += 1;
-    auto start = i;
+    auto t = tokens[i];
+    auto start = t.start;
     auto openbrace = 1;
     while (t.type != Token::Eof) {
         i += 1;
@@ -26,13 +26,8 @@ std::string Parser::consume_braced_string() {
             break;
         }
     }
-    auto end = i;
-    std::string s;
-    for (auto idx = start; idx < end; idx++) {
-        s += tokens[idx].word;
-        s += " ";
-    }
-    return s;
+    auto end = tokens[i].end - 1;
+    return std::string(&lexer.s[start], end - start);
 }
 
 std::string Parser::consume_code() {
@@ -44,12 +39,12 @@ std::string Parser::consume_code() {
 
 Widget Parser::consume_widget() {
     Widget w;
-    w.type = tokens[i].word;
+    w.type = tokens[i].get_word();
     // auto t = l.next();
     // if (t.type == Token::OpenBrace) {
     //     t = l.next();
     // }
-    // if (t.word)
+    // if (t.get_word())
     //     w.name = consume_word(t);
     // else
     //     w.name = "";
@@ -57,7 +52,7 @@ Widget Parser::consume_widget() {
     //     t = l.next();
     //     if (t.type == Token::CloseBrace)
     //         break;
-    //     if (t.word) {
+    //     if (t.get_word()) {
     //         if (t.equals("open"))
     //             w.props.open = true;
     //         if (t.equals("hide"))
@@ -284,7 +279,7 @@ Widget Parser::consume_widget() {
     //             OpenBrace--;
     //         if (OpenBrace == 0)
     //             break;
-    //         if (t.word)
+    //         if (t.get_word())
     //             if (t.starts_with("Fl_") || t.equals("MenuItem") || t.equals("Submenu")) {
     //                 auto c = consume_widget();
     //                 c.type = consume_word(t);
@@ -301,25 +296,23 @@ Class Parser::consume_class() {
     if (tokens[i].type == Token::OpenBrace) {
         i += 2;
     }
-    c.name = tokens[i].word;
+    c.name = tokens[i].get_word();
     i += 1;
     // handle props
     while (tokens[i].type != Token::CloseBrace) {
         i += 1;
-        if (tokens[i].word) {
-            if (tokens[i].equals("open"))
-                c.props.open = true;
-            if (tokens[i].equals("protected"))
-                c.props.visibility = Visibility::PROTECTED;
-            if (tokens[i].equals("private"))
-                c.props.visibility = Visibility::PRIVATE;
-            if (tokens[i].equals("comment")) {
-                i += 1;
-                if (tokens[i].type == Token::OpenBrace) {
-                    c.props.comment = consume_braced_string();
-                } else {
-                    c.props.comment = tokens[i].word;
-                }
+        if (tokens[i].equals("open"))
+            c.props.open = true;
+        if (tokens[i].equals("protected"))
+            c.props.visibility = Visibility::PROTECTED;
+        if (tokens[i].equals("private"))
+            c.props.visibility = Visibility::PRIVATE;
+        if (tokens[i].equals("comment")) {
+            i += 1;
+            if (tokens[i].type == Token::OpenBrace) {
+                c.props.comment = consume_braced_string();
+            } else {
+                c.props.comment = tokens[i].get_word();
             }
         }
     }
@@ -336,7 +329,7 @@ Class Parser::consume_class() {
                 if (tokens[i].type == Token::OpenBrace) {
                     c.props.comment = consume_braced_string();
                 } else {
-                    c.props.comment = tokens[i].word;
+                    c.props.comment = tokens[i].get_word();
                 }
             }
         }
@@ -348,7 +341,7 @@ Function Parser::consume_func() {
     Function f;
     i += 1;
     i += 1;
-    f.name = tokens[i].word;
+    f.name = tokens[i].get_word();
     i += 1; // closing parens of function name
     i += 1; // opening parens of props
     while (tokens[i].type != Token::Eof) {
@@ -371,7 +364,7 @@ Function Parser::consume_func() {
             if (tokens[i].type == Token::OpenBrace) {
                 f.props.comment = consume_braced_string();
             } else {
-                f.props.comment = tokens[i].word;
+                f.props.comment = tokens[i].get_word();
             }
         }
         if (t.equals("return_type")) {
@@ -379,7 +372,7 @@ Function Parser::consume_func() {
             if (tokens[i].type == Token::OpenBrace) {
                 f.props.return_type = consume_braced_string();
             } else {
-                f.props.return_type = tokens[i].word;
+                f.props.return_type = tokens[i].get_word();
             }
         }
     }
@@ -443,7 +436,7 @@ Decl Parser::consume_decl() {
     return d;
 }
 
-Parser::Parser(Lexer lexer) {
+Parser::Parser(Lexer l) : lexer(l) {
     auto t = lexer.next();
     tokens.push_back(t);
     while (t.type != Token::Eof) {
@@ -463,16 +456,18 @@ Ast Parser::parse() {
         case Token::Word: {
             if (curr.equals("version")) {
                 i += 1;
-                a.version = strtod(tokens[i].word, 0);
+                a.version = strtod(tokens[i].get_word().c_str(), 0);
             }
             if (curr.equals("i18n_type")) {
                 a.i18n_type = true;
                 i += 2;
             }
             if (curr.equals("header_name")) {
+                i+=1;
                 a.header_name = consume_braced_string();
             }
             if (curr.equals("code_name")) {
+                i += 1;
                 a.code_name = consume_braced_string();
             }
             if (curr.equals("class")) {

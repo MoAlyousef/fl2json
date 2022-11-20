@@ -117,7 +117,7 @@ struct Ast {
     double version = 0.0;
     std::string header_name;
     std::string code_name;
-    bool i18n_type;
+    std::optional<bool> i18n_type;
     std::vector<Class> classes;
     std::vector<Function> functions;
     std::vector<Comment> comments;
