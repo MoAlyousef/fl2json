@@ -81,7 +81,11 @@ Widget Parser::consume_widget() {
         }
         if (tokens[i].equals("type")) {
             i += 1;
-            w.props.type = tokens[i].get_word();
+            if (tokens[i].type == Token::OpenBrace) {
+                w.props.type = consume_braced_string();
+            } else {
+                w.props.type = tokens[i].get_word();
+            }
         }
         if (tokens[i].equals("labeltype")) {
             i += 1;
@@ -121,7 +125,7 @@ Widget Parser::consume_widget() {
         }
         if (tokens[i].equals("shortcut")) {
             i += 1;
-            w.props.shortcut = atoi(tokens[i].get_word().c_str());
+            w.props.shortcut = tokens[i].get_word();
         }
         if (tokens[i].equals("gap")) {
             i += 1;
@@ -445,8 +449,8 @@ Ast Parser::parse() {
                 a.version = strtod(tokens[i].get_word().c_str(), 0);
             }
             if (curr.equals("i18n_type")) {
-                a.i18n_type = true;
-                i += 2;
+                i += 1;
+                a.i18n_type = atoi(tokens[i].get_word().c_str());
             }
             if (curr.equals("header_name")) {
                 i += 1;

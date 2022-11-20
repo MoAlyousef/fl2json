@@ -3,6 +3,7 @@ version 1.0400
 header_name {.h}
 code_name {.cxx}
 avoid_early_includes
+i18n_type 2
 class UserInterface {open
 } {
   Function {make_window()} {open
@@ -17,7 +18,7 @@ class UserInterface {open
           xywh {5 5 390 30} type HORIZONTAL gap 5 set_size_tuples {3  0 80  1 80  3 30 }
         } {
           Fl_Menu_Button {} {
-            label menu open
+            label menu open shortcut 0xffffff
             xywh {5 5 80 30}
           } {}
           Fl_Box {} {

@@ -39,7 +39,7 @@ struct WidgetProps {
     std::optional<int> textsize;
     std::optional<unsigned int> textcolor;
     std::optional<std::string> klass;
-    std::optional<int> shortcut;
+    std::optional<std::string> shortcut;
     std::optional<std::string> code0;
     std::optional<std::string> code1;
     std::optional<std::string> code2;
@@ -117,7 +117,7 @@ struct Ast {
     double version = 0.0;
     std::string header_name;
     std::string code_name;
-    std::optional<bool> i18n_type;
+    std::optional<int> i18n_type;
     std::vector<Class> classes;
     std::vector<Function> functions;
     std::vector<Comment> comments;
