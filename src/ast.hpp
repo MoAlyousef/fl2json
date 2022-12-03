@@ -120,6 +120,7 @@ struct Ast {
     std::optional<int> i18n_type;
     std::vector<Class> classes;
     std::vector<Function> functions;
+    std::vector<Widget> widget_classes;
     std::vector<Comment> comments;
     std::vector<Decl> decls;
     std::string json_string();
