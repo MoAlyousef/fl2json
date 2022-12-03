@@ -329,9 +329,7 @@ Class Parser::consume_class() {
 Function Parser::consume_func() {
     Function f;
     i += 1;
-    i += 1;
-    f.name = tokens[i].get_word();
-    i += 1; // closing parens of function name
+    f.name = consume_braced_string();
     i += 1; // opening parens of props
     while (tokens[i].type != Token::Eof) {
         i += 1;
