@@ -83,7 +83,7 @@ NLOHMANN_JSONIFY_ALL_THINGS(DeclProps, visibility, global, local)
 NLOHMANN_JSONIFY_ALL_THINGS(Decl, decl, props)
 
 NLOHMANN_JSONIFY_ALL_THINGS(Ast, version, header_name, code_name, i18n_type, classes, functions,
-                            comments, decls)
+                            widget_classes, comments, decls)
 
 std::string Ast::json_string() {
     nlohmann::json j = *this;
