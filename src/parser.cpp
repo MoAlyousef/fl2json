@@ -382,7 +382,6 @@ Function Parser::consume_func() {
             }
         }
     }
-    i += 1;
     return f;
 }
 
