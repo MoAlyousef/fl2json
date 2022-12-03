@@ -477,6 +477,10 @@ Ast Parser::parse() {
                 auto d = consume_decl();
                 a.decls.push_back(d);
             }
+            if (curr.equals("widget_class")) {
+                auto d = consume_widget();
+                a.widget_classes.push_back(d);
+            }
         };
         default: {
         }
