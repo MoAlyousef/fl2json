@@ -59,9 +59,19 @@ Widget Parser::consume_widget() {
             w.props.visible = true;
         if (tokens[i].equals("hotspot"))
             w.props.hotspot = true;
+        if (tokens[i].equals("modal"))
+            w.props.modal = true;
+        if (tokens[i].equals("non_modal"))
+            w.props.non_modal = true;
+        if (tokens[i].equals("noborder"))
+            w.props.noborder = true;
         if (tokens[i].equals("xywh")) {
             i += 1;
             w.props.xywh = consume_braced_string();
+        }
+        if (tokens[i].equals("size_range")) {
+            i += 1;
+            w.props.size_range = consume_braced_string();
         }
         if (tokens[i].equals("color")) {
             i += 1;
@@ -157,6 +167,14 @@ Widget Parser::consume_widget() {
                 w.props.label = consume_braced_string();
             } else {
                 w.props.label = tokens[i].get_word();
+            }
+        }
+        if (tokens[i].equals("xclass")) {
+            i += 1;
+            if (tokens[i].type == Token::OpenBrace) {
+                w.props.xclass = consume_braced_string();
+            } else {
+                w.props.xclass = tokens[i].get_word();
             }
         }
         if (tokens[i].equals("class")) {
@@ -266,10 +284,8 @@ Widget Parser::consume_widget() {
         i += 1;
         while (tokens[i].type != Token::CloseBrace) {
             i += 1;
-            while (tokens[i].starts_with("Fl_")
-                || tokens[i].equals("MenuItem")
-                || tokens[i].equals("Submenu"))
-            {
+            while (tokens[i].starts_with("Fl_") || tokens[i].equals("MenuItem") ||
+                   tokens[i].equals("Submenu")) {
                 auto c = consume_widget();
                 w.children.push_back(c);
                 i += 1;

@@ -51,6 +51,11 @@ struct WidgetProps {
     std::optional<std::string> user_data_type;
     std::optional<std::string> callback;
     std::optional<std::string> comment;
+    std::optional<bool> modal;
+    std::optional<bool> non_modal;
+    std::optional<bool> noborder;
+    std::optional<std::string> xclass;
+    std::optional<std::string> size_range;
 };
 
 struct Widget {

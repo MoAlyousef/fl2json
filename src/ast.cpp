@@ -56,7 +56,7 @@ NLOHMANN_JSONIFY_ALL_THINGS(WidgetProps, open, xywh, label, size_tuple, type, hi
                             labelsize, labelcolor, align, when, minimum, maximum, step, slider_size,
                             size, textfont, textsize, textcolor, klass, shortcut, code0, code1,
                             code2, code3, extra_code, gap, user_data, user_data_type, callback,
-                            comment)
+                            comment, modal, non_modal, noborder, size_range, xclass)
 
 NLOHMANN_JSONIFY_ALL_THINGS(Widget, type, name, props, children)
 
