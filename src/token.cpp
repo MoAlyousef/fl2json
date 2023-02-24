@@ -2,7 +2,7 @@
 #include <stdio.h>
 #include <string.h>
 
-const char *Token::type_string() {
+const char *Token::type_string() const {
     switch (type) {
     case Unknown:
         return "Unknown";
@@ -15,25 +15,27 @@ const char *Token::type_string() {
     case Eof:
         return "Eof";
     }
-    return 0;
+    return nullptr;
 }
-void Token::print() {
+void Token::print() const {
     fprintf(stdout, "%s %.*s start:%ld end:%ld\n", type_string(), (int)(end - start), word, start,
             end);
 }
-void Token::print_word() {
+void Token::print_word() const {
     fprintf(stdout, "%.*s\n", (int)(end - start), word);
 }
-bool Token::equals(const char *other) {
+bool Token::equals(const char *other) const {
     auto len = strlen(other);
-    return end - start == len && !strncmp(word, other, len);
+    return end - start == len && (strncmp(word, other, len) == 0);
 }
 
-bool Token::starts_with(const char *other) {
+bool Token::starts_with(const char *other) const {
     return get_word().find(other) == 0;
 }
 
-std::string Token::get_word() {
-    if (!word) return "";
+std::string Token::get_word() const {
+    if (word == nullptr) {
+        return "";
+    }
     return std::string(word, end - start);
 }

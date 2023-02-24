@@ -43,28 +43,39 @@ Widget Parser::consume_widget() {
     w.name = tokens[i].get_word();
     while (tokens[i].type != Token::Eof) {
         i += 1;
-        if (tokens[i].type == Token::CloseBrace)
+        if (tokens[i].type == Token::CloseBrace) {
             break;
-        if (tokens[i].equals("open"))
+        }
+        if (tokens[i].equals("open")) {
             w.props.open = true;
-        if (tokens[i].equals("hide"))
+        }
+        if (tokens[i].equals("hide")) {
             w.props.hide = true;
-        if (tokens[i].equals("deactivate"))
+        }
+        if (tokens[i].equals("deactivate")) {
             w.props.deactivate = true;
-        if (tokens[i].equals("divider"))
+        }
+        if (tokens[i].equals("divider")) {
             w.props.divider = true;
-        if (tokens[i].equals("resizable"))
+        }
+        if (tokens[i].equals("resizable")) {
             w.props.resizable = true;
-        if (tokens[i].equals("visible"))
+        }
+        if (tokens[i].equals("visible")) {
             w.props.visible = true;
-        if (tokens[i].equals("hotspot"))
+        }
+        if (tokens[i].equals("hotspot")) {
             w.props.hotspot = true;
-        if (tokens[i].equals("modal"))
+        }
+        if (tokens[i].equals("modal")) {
             w.props.modal = true;
-        if (tokens[i].equals("non_modal"))
+        }
+        if (tokens[i].equals("non_modal")) {
             w.props.non_modal = true;
-        if (tokens[i].equals("noborder"))
+        }
+        if (tokens[i].equals("noborder")) {
             w.props.noborder = true;
+        }
         if (tokens[i].equals("xywh")) {
             i += 1;
             w.props.xywh = consume_braced_string();
@@ -103,19 +114,19 @@ Widget Parser::consume_widget() {
         }
         if (tokens[i].equals("labelfont")) {
             i += 1;
-            w.props.labelfont = atoi(tokens[i].get_word().c_str());
+            w.props.labelfont = std::stoi(tokens[i].get_word());
         }
         if (tokens[i].equals("textfont")) {
             i += 1;
-            w.props.textfont = atoi(tokens[i].get_word().c_str());
+            w.props.textfont = std::stoi(tokens[i].get_word());
         }
         if (tokens[i].equals("labelsize")) {
             i += 1;
-            w.props.labelsize = atoi(tokens[i].get_word().c_str());
+            w.props.labelsize = std::stoi(tokens[i].get_word());
         }
         if (tokens[i].equals("textsize")) {
             i += 1;
-            w.props.textsize = atoi(tokens[i].get_word().c_str());
+            w.props.textsize = std::stoi(tokens[i].get_word());
         }
         if (tokens[i].equals("box")) {
             i += 1;
@@ -127,11 +138,11 @@ Widget Parser::consume_widget() {
         }
         if (tokens[i].equals("align")) {
             i += 1;
-            w.props.align = atoi(tokens[i].get_word().c_str());
+            w.props.align = std::stoi(tokens[i].get_word());
         }
         if (tokens[i].equals("when")) {
             i += 1;
-            w.props.when = atoi(tokens[i].get_word().c_str());
+            w.props.when = std::stoi(tokens[i].get_word());
         }
         if (tokens[i].equals("shortcut")) {
             i += 1;
@@ -139,7 +150,7 @@ Widget Parser::consume_widget() {
         }
         if (tokens[i].equals("gap")) {
             i += 1;
-            w.props.gap = atoi(tokens[i].get_word().c_str());
+            w.props.gap = std::stoi(tokens[i].get_word());
         }
         if (tokens[i].equals("minimum")) {
             i += 1;
@@ -306,12 +317,15 @@ Class Parser::consume_class() {
     // handle props
     while (tokens[i].type != Token::CloseBrace) {
         i += 1;
-        if (tokens[i].equals("open"))
+        if (tokens[i].equals("open")) {
             c.props.open = true;
-        if (tokens[i].equals("protected"))
+        }
+        if (tokens[i].equals("protected")) {
             c.props.visibility = Visibility::PROTECTED;
-        if (tokens[i].equals("private"))
+        }
+        if (tokens[i].equals("private")) {
             c.props.visibility = Visibility::PRIVATE;
+        }
         if (tokens[i].equals("comment")) {
             i += 1;
             if (tokens[i].type == Token::OpenBrace) {
@@ -354,14 +368,18 @@ Function Parser::consume_func() {
         }
         auto t = tokens[i];
 
-        if (t.equals("open"))
+        if (t.equals("open")) {
             f.props.open = true;
-        if (t.equals("C"))
+        }
+        if (t.equals("C")) {
             f.props.C = true;
-        if (t.equals("protected"))
+        }
+        if (t.equals("protected")) {
             f.props.visibility = Visibility::PROTECTED;
-        if (t.equals("private"))
+        }
+        if (t.equals("private")) {
             f.props.visibility = Visibility::PRIVATE;
+        }
         if (t.equals("comment")) {
             i += 1;
             if (tokens[i].type == Token::OpenBrace) {
@@ -409,10 +427,12 @@ Comment Parser::consume_comment() {
             break;
         }
         auto t = tokens[i];
-        if (t.equals("in_source"))
+        if (t.equals("in_source")) {
             c.props.in_source = true;
-        if (t.equals("in_header"))
+        }
+        if (t.equals("in_header")) {
             c.props.in_header = true;
+        }
     }
     return c;
 }
@@ -427,14 +447,18 @@ Decl Parser::consume_decl() {
             break;
         }
         auto t = tokens[i];
-        if (t.equals("private"))
+        if (t.equals("private")) {
             d.props.visibility = Visibility::PRIVATE;
-        if (t.equals("public"))
+        }
+        if (t.equals("public")) {
             d.props.visibility = Visibility::PUBLIC;
-        if (t.equals("global"))
+        }
+        if (t.equals("global")) {
             d.props.global = true;
-        if (t.equals("local"))
+        }
+        if (t.equals("local")) {
             d.props.local = true;
+        }
     }
     return d;
 }
@@ -459,11 +483,11 @@ Ast Parser::parse() {
         case Token::Word: {
             if (curr.equals("version")) {
                 i += 1;
-                a.version = strtod(tokens[i].get_word().c_str(), 0);
+                a.version = strtod(tokens[i].get_word().c_str(), nullptr);
             }
             if (curr.equals("i18n_type")) {
                 i += 1;
-                a.i18n_type = atoi(tokens[i].get_word().c_str());
+                a.i18n_type = std::stoi(tokens[i].get_word());
             }
             if (curr.equals("header_name")) {
                 i += 1;

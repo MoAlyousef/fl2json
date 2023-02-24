@@ -26,17 +26,19 @@ void optional_from_json(const J &j, const char *name, std::optional<T> &value) {
 
 template <typename T>
 void extended_to_json(const char *key, nlohmann::json &j, const T &value) {
-    if constexpr (is_optional<T>)
+    if constexpr (is_optional<T>) {
         optional_to_json(j, key, value);
-    else
+    } else {
         j[key] = value;
+    }
 }
 template <typename T>
 void extended_from_json(const char *key, const nlohmann::json &j, T &value) {
-    if constexpr (is_optional<T>)
+    if constexpr (is_optional<T>) {
         optional_from_json(j, key, value);
-    else
+    } else {
         j.at(key).get_to(value);
+    }
 }
 
 #define EXTEND_JSON_TO(v1) extended_to_json(#v1, nlohmann_json_j, nlohmann_json_t.v1);

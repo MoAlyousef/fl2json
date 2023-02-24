@@ -14,10 +14,10 @@ struct Token {
     const char *word = 0;
     unsigned long start = 0;
     unsigned long end = 0;
-    const char *type_string();
-    void print();
-    void print_word();
-    bool equals(const char *other);
-    bool starts_with(const char *other);
-    std::string get_word();
+    const char *type_string() const;
+    void print() const;
+    void print_word() const;
+    bool equals(const char *other) const;
+    bool starts_with(const char *other) const;
+    std::string get_word() const;
 };

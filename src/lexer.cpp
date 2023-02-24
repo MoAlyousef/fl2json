@@ -20,7 +20,7 @@ Token Lexer::next() {
         t.end = size;
         return t;
     }
-    while (cursor < size && isspace(s[cursor])) {
+    while (cursor < size && (isspace(s[cursor]) != 0)) {
         cursor++;
     }
     switch (s[cursor]) {
@@ -42,7 +42,7 @@ Token Lexer::next() {
         t.type = Token::Word;
         t.word = &s[cursor];
         t.start = cursor;
-        while (cursor < size && !isspace(s[cursor]) && s[cursor] != '}') {
+        while (cursor < size && (isspace(s[cursor]) == 0) && s[cursor] != '}') {
             cursor++;
         }
         t.end = cursor;

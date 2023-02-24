@@ -1,0 +1,6 @@
+Checks: "cert*, 
+    readability*, 
+    modernize*, 
+    -readability-magic-numbers, 
+    -modernize-use-trailing-return-type, 
+    -modernize-deprecated-headers"
